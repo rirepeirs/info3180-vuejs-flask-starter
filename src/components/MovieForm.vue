@@ -1,11 +1,11 @@
 <template>
     <form @submit.prevent="saveMovie" id="movieForm" method="POST" enctype="multipart/form-data">
-        <div v-if="message" class="alert">
+        <div v-if="message" class="alert alert-success">
             {{ message }}
         </div>
         <div v-if="errors.length" class="alert alert-danger">
             <ul>
-                <li v-for="error in errors" :key="error">
+                <li v-for="(error, index) in errors" :key="index">
                     {{ error }}
                 </li>
             </ul>
@@ -15,7 +15,7 @@
             <label>Title</label>
             <input type="text" name="title" class="form-control" >
         </div>
-        <div class="form_group">
+        <div class="form-group">
             <label>Descriptions</label>
             <textarea name="description" class="form-control"></textarea>
         </div>
@@ -23,7 +23,7 @@
             <label>Poster</label>
             <input type="file" name="poster" class="form-control">
         </div>
-        <button type="submit">Submit</button>
+        <button type="submit" class="btn btn-primary mt-2">Submit</button>
     </form>
 </template>
 
@@ -57,12 +57,13 @@ function saveMovie() {
         if (data.message){
             message.value = data.message;
             errors.value = [];
+            movieForm.reset();
         }else {
             message.value = '';
-            errors.value = Object.values(data.errors).flat();
+            errors.value = data.errors;
         }
     })
     .catch(err => console.error(err));
 }
-onMounted(getCsrfToken());
+onMounted(getCsrfToken);
 </script>
