@@ -13,6 +13,7 @@ from .forms import MovieForm
 from .models import Movie
 from . import db
 from flask_wtf.csrf import generate_csrf
+from flask import send_from_directory
 
 ###
 # Routing for your application.
@@ -66,6 +67,22 @@ def movies():
 def get_csrf():
     return jsonify({'csrf_token': generate_csrf()})
 
+@app.route('/api/v1/movies', methods=['GET'])
+def get_movies():
+    movies = Movie.query.all()
+    movie_list = []
+    for movie in movies:
+        movie_list.append({
+            "id": movie.id,
+            "title": movie.title,
+            "description": movie.description,
+            "poster": f"/api/v1/posters/{movie.poster}"
+        })
+    return jsonify({"movies": movie_list})
+
+@app.route('/api/v1/posters/<filename>')
+def get_poster(filename):
+    return send_from_directory(os.path.join(os.getcwd(), 'uploads'), filename)
 
 @app.route('/<file_name>.txt')
 def send_text_file(file_name):

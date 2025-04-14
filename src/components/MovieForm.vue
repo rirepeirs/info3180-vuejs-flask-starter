@@ -1,30 +1,33 @@
 <template>
-    <form @submit.prevent="saveMovie" id="movieForm" method="POST" enctype="multipart/form-data">
-        <div v-if="message" class="alert alert-success">
-            {{ message }}
-        </div>
-        <div v-if="errors.length" class="alert alert-danger">
-            <ul>
-                <li v-for="(error, index) in errors" :key="index">
-                    {{ error }}
-                </li>
-            </ul>
-        </div>
+    <div class="container">
+        <form @submit.prevent="saveMovie" id="movieForm" method="POST" enctype="multipart/form-data">
+            <div v-if="message" class="alert alert-success">
+                {{ message }}
+            </div>
+            <div v-if="errors.length" class="alert alert-danger">
+                <ul>
+                    <li v-for="(error, index) in errors" :key="index">
+                        {{ error }}
+                    </li>
+                </ul>
+            </div>
 
-        <div class="form-group">
-            <label>Title</label>
-            <input type="text" name="title" class="form-control" >
-        </div>
-        <div class="form-group">
-            <label>Descriptions</label>
-            <textarea name="description" class="form-control"></textarea>
-        </div>
-        <div class="form-group">
-            <label>Poster</label>
-            <input type="file" name="poster" class="form-control">
-        </div>
-        <button type="submit" class="btn btn-primary mt-2">Submit</button>
-    </form>
+            <div class="form-group mb-3">
+                <label>Title</label>
+                <input type="text" name="title" class="form-control" >
+            </div>
+            <div class="form-group mb-3">
+                <label>Descriptions</label>
+                <textarea name="description" class="form-control"></textarea>
+            </div>
+            <div class="form-group mb-3">
+                <label>Poster</label>
+                <input type="file" name="poster" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-primary mt-2">Submit</button>
+        </form>
+    </div>
+    
 </template>
 
 <script setup>
